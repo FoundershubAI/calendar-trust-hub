@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Form, FormField, FormItem, FormLabel, FormControl } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { toast } from "@/hooks/use-toast";
-import { CalendarIcon, Clock, Check, Sparkles, ArrowRight } from "lucide-react";
+import { CalendarIcon, Clock, Check, Sparkles, ArrowRight, CheckCircle, User, Mail, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 type TimeSlot = {
@@ -235,11 +235,17 @@ const BookingCalendar = () => {
 
       {/* Booking Modal */}
       <Dialog open={isBookingModalOpen} onOpenChange={setIsBookingModalOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-white rounded-xl p-0 overflow-hidden">
+        <DialogContent className="sm:max-w-[500px] bg-white rounded-xl p-0 overflow-hidden border-0">
           <div className="h-3 bg-gradient-to-r from-blue-500 to-purple-600"></div>
-          <DialogHeader className="px-6 pt-6 pb-0">
-            <DialogTitle className="text-xl font-bold text-center">
-              Complete Your Booking
+          <DialogHeader className="px-6 pt-6 pb-2">
+            <DialogTitle className="text-2xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                Complete Your Booking
+              </motion.div>
             </DialogTitle>
           </DialogHeader>
           
@@ -250,90 +256,171 @@ const BookingCalendar = () => {
               animate="visible"
               exit="exit"
               variants={slideVariants}
+              className="px-6 pt-4 pb-6"
             >
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleBooking)} className="space-y-4 pt-6 px-6 pb-6">
-                  <div className="bg-blue-50 p-4 rounded-xl mb-4 border-l-4 border-blue-500 shadow-sm">
+                <form onSubmit={form.handleSubmit(handleBooking)} className="space-y-5">
+                  <motion.div 
+                    className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-xl mb-5 border-l-4 border-blue-500 shadow-sm"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
                     <p className="font-medium text-gray-700 flex items-center">
-                      <CalendarIcon className="mr-2 h-4 w-4 text-blue-600" />
-                      {selectedDate ? format(selectedDate, "MMMM d, yyyy") : ""} at{" "}
-                      {timeSlots.find((slot) => slot.id === selectedTimeSlot)?.time}
+                      <CalendarIcon className="mr-2 h-5 w-5 text-blue-600" />
+                      <motion.span
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.5 }}
+                      >
+                        {selectedDate ? format(selectedDate, "MMMM d, yyyy") : ""} at{" "}
+                        <span className="text-blue-700 font-semibold">
+                          {timeSlots.find((slot) => slot.id === selectedTimeSlot)?.time}
+                        </span>
+                      </motion.span>
                     </p>
-                  </div>
+                  </motion.div>
                   
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="John Doe" 
-                            {...field} 
-                            required 
-                            className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" 
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                  <motion.div 
+                    variants={container} 
+                    initial="hidden" 
+                    animate="show" 
+                    className="space-y-4"
+                  >
+                    <motion.div variants={item}>
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center text-sm font-medium text-gray-700">
+                              <User className="mr-2 h-4 w-4 text-blue-600" /> Your Name
+                            </FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="John Doe" 
+                                {...field} 
+                                required 
+                                className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all duration-300 hover:border-blue-300" 
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </motion.div>
+                    
+                    <motion.div variants={item}>
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center text-sm font-medium text-gray-700">
+                              <Mail className="mr-2 h-4 w-4 text-blue-600" /> Email Address
+                            </FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="john@example.com" 
+                                type="email" 
+                                {...field} 
+                                required 
+                                className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all duration-300 hover:border-blue-300" 
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </motion.div>
+                    
+                    <motion.div variants={item}>
+                      <FormField
+                        control={form.control}
+                        name="notes"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="flex items-center text-sm font-medium text-gray-700">
+                              <FileText className="mr-2 h-4 w-4 text-blue-600" /> Notes (Optional)
+                            </FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="Any special requirements" 
+                                {...field} 
+                                className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 transition-all duration-300 hover:border-blue-300" 
+                              />
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
+                    </motion.div>
+                  </motion.div>
                   
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="john@example.com" 
-                            type="email" 
-                            {...field} 
-                            required 
-                            className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" 
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="notes"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Notes (Optional)</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Any special requirements" 
-                            {...field} 
-                            className="focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" 
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <DialogFooter className="pt-4 flex-col-reverse sm:flex-row gap-3">
-                    <DialogClose asChild>
-                      <Button type="button" variant="outline" className="hover:bg-gray-100 border-gray-300">
-                        Cancel
-                      </Button>
-                    </DialogClose>
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <DialogFooter className="pt-5 flex-col-reverse sm:flex-row gap-3">
+                    <motion.div 
+                      whileHover={{ scale: 1.03 }} 
+                      whileTap={{ scale: 0.97 }}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.6 }}
+                    >
+                      <DialogClose asChild>
+                        <Button type="button" variant="outline" className="border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
+                          Cancel
+                        </Button>
+                      </DialogClose>
+                    </motion.div>
+                    <motion.div 
+                      whileHover={{ scale: 1.03 }} 
+                      whileTap={{ scale: 0.97 }}
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="w-full sm:w-auto"
+                    >
                       <Button 
                         type="submit" 
-                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group"
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group w-full relative overflow-hidden"
                       >
-                        Confirm Booking
-                        <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        <span className="relative z-10 flex items-center">
+                          Confirm Booking
+                          <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </span>
+                        <span className="absolute inset-0 bg-gradient-to-r from-blue-700 to-purple-700 opacity-0 group-hover:opacity-100 transition-opacity"></span>
                       </Button>
                     </motion.div>
                   </DialogFooter>
                 </form>
               </Form>
             </motion.div>
+          </AnimatePresence>
+          
+          {/* Success Animation (can be shown after form submission) */}
+          <AnimatePresence>
+            {false && ( // Change to true when submission is successful
+              <motion.div
+                className="absolute inset-0 flex items-center justify-center bg-white z-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="text-center"
+                >
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
+                    className="mx-auto mb-4 rounded-full bg-green-100 p-3 w-20 h-20 flex items-center justify-center"
+                  >
+                    <CheckCircle className="h-10 w-10 text-green-500" />
+                  </motion.div>
+                  <h3 className="text-xl font-semibold mb-1">Booking Confirmed!</h3>
+                  <p className="text-gray-600">Your appointment has been scheduled</p>
+                </motion.div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </DialogContent>
       </Dialog>
