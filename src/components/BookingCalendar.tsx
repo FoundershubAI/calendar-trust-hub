@@ -198,26 +198,29 @@ const BookingCalendar = () => {
             >
               {timeSlots.map((slot) => (
                 <motion.div key={slot.id} variants={item}>
-                  <Button
-                    variant={slot.available ? "outline" : "secondary"}
-                    disabled={!slot.available}
-                    onClick={() => handleSelectTimeSlot(slot.id)}
-                    className={`justify-start text-left w-full transition-all duration-300 ${
-                      !slot.available 
-                        ? "line-through opacity-60" 
-                        : "hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
-                    }`}
+                  <motion.div 
                     whileHover={slot.available ? { scale: 1.03 } : {}}
                     whileTap={slot.available ? { scale: 0.98 } : {}}
                   >
-                    <Clock className="mr-2 h-4 w-4" />
-                    {slot.time}
-                    {!slot.available && (
-                      <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
-                        Booked
-                      </span>
-                    )}
-                  </Button>
+                    <Button
+                      variant={slot.available ? "outline" : "secondary"}
+                      disabled={!slot.available}
+                      onClick={() => handleSelectTimeSlot(slot.id)}
+                      className={`justify-start text-left w-full transition-all duration-300 ${
+                        !slot.available 
+                          ? "line-through opacity-60" 
+                          : "hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300"
+                      }`}
+                    >
+                      <Clock className="mr-2 h-4 w-4" />
+                      {slot.time}
+                      {!slot.available && (
+                        <span className="ml-auto text-xs bg-gray-200 text-gray-600 px-2 py-0.5 rounded-full">
+                          Booked
+                        </span>
+                      )}
+                    </Button>
+                  </motion.div>
                 </motion.div>
               ))}
             </motion.div>
@@ -318,13 +321,15 @@ const BookingCalendar = () => {
                         Cancel
                       </Button>
                     </DialogClose>
-                    <Button 
-                      type="submit" 
-                      className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group"
-                    >
-                      Confirm Booking
-                      <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button 
+                        type="submit" 
+                        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group"
+                      >
+                        Confirm Booking
+                        <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </motion.div>
                   </DialogFooter>
                 </form>
               </Form>

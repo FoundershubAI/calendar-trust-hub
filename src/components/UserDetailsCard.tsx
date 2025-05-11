@@ -155,14 +155,14 @@ const UserDetailsCard: React.FC<UserDetailsCardProps> = ({
             )}
 
             <motion.div variants={item}>
-              <Button 
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group shadow-lg hover:shadow-xl transition-all duration-300"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <span>Learn More About Me</span>
-                <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Button>
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button 
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <span>Learn More About Me</span>
+                  <ArrowRight className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         </CardContent>
