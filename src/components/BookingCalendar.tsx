@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
@@ -71,7 +70,7 @@ const BookingCalendar = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl mx-auto">
+    <div className="bg-white rounded-lg shadow-xl overflow-hidden h-full">
       <div className="bg-blue-600 text-white p-5">
         <h2 className="text-2xl font-semibold flex items-center">
           <CalendarIcon className="mr-2 h-6 w-6" />
